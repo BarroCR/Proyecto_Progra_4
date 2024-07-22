@@ -1,2 +1,7 @@
 # Proyecto_Progra_4
- Avanzes del proyecto 
+ Gracias por utilizar el Geolocalizador de Sismos
+
+Cosas necesarias a instalar
+
+-NodeJS
+
