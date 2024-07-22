@@ -5,13 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proyecto Programacion IV</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/flatly/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/flatly/bootstrap.min.css" rel="stylesheet"
+        id="theme-link">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 
-<body>
+<body class="theme-dark">
     <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Navbar</a>
+            <a class="navbar-brand" href="#">
+                
+                <img class="logo1" src="img/logo1.png" alt="Logo">
+                
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
                 aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -43,30 +50,27 @@
                             <a class="dropdown-item" href="#">Separated link</a>
                         </div>
                     </li>
-
                     <li class="nav-item dropdown" data-bs-theme="light">
-                        <a class="nav-link dropdown-toggle d-flex align-items-center show" href="#" id="theme-menu" aria-expanded="true" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme">
-                          <i class="bi bi-circle-half"></i>
-                          <span class="d-lg-none ms-2">Toggle theme</span>
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="theme-menu"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                            aria-label="Toggle theme">
+                            <i class="bi bi-circle-half"></i>
+                            <span class="d-lg-none ms-2">Toggle theme</span>
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end show" data-bs-popper="static">
-                          <li>
-                            <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
-                              <i class="bi bi-sun-fill"></i><span class="ms-2">Light</span>
-                            </button>
-                          </li>
-                          <li>
-                            <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="true">
-                              <i class="bi bi-moon-stars-fill"></i><span class="ms-2">Dark</span>
-                            </button>
-                          </li>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="theme-menu">
+                            <li>
+                                <button type="button" class="dropdown-item d-flex align-items-center"
+                                    data-theme="light">
+                                    <i class="bi bi-sun-fill"></i><span class="ms-2">Light</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" class="dropdown-item d-flex align-items-center" data-theme="dark">
+                                    <i class="bi bi-moon-stars-fill"></i><span class="ms-2">Dark</span>
+                                </button>
+                            </li>
                         </ul>
-                      </li>
-
-
-
-
-                    
+                    </li>
                 </ul>
                 <form class="d-flex">
                     <input class="form-control me-sm-2" type="search" placeholder="Search">
@@ -76,13 +80,9 @@
         </div>
     </nav>
 
-
-
-
-
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
