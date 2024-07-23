@@ -1,21 +1,19 @@
-from flask import Blueprint, render_template, request , flash,  redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import session
 from sqlalchemy import text
 
-
-
+# Crear un objeto Blueprint llamado 'auth'
 auth = Blueprint('auth', __name__)
 
-
-
-
+# Ruta para la página de inicio de sesión y registro
 @auth.route('/login', methods=['GET', 'POST'])
 def signPage():
-    action = request.form.get('action')  # Use .get() to avoid KeyError
+    action = request.form.get('action')  # Obtener el valor del campo 'action' del formulario
 
-    if action == 'register':
-        if request.method == 'POST':
+    if action == 'register':  # Si el valor de 'action' es 'register'
+        if request.method == 'POST':  # Si la solicitud es un POST
+            # Obtener los datos del formulario de registro
             email = request.form.get('register-email')
             password = request.form.get('register-password')
             name = request.form.get('register-name')
@@ -24,53 +22,60 @@ def signPage():
             confirmPass = request.form.get('register-confirmPassword')
             dateOfBirth = request.form.get('register-dateOfBirth')
             
-            if password != confirmPass:
+            if password != confirmPass:  # Si las contraseñas no coinciden
                 flash('Las contraseñas no coinciden, por favor intenta de nuevo', category='error')
             else:
-                password1 = generate_password_hash(password)
+                password1 = generate_password_hash(password)  # Generar un hash de la contraseña
                 
-                
+                # Comando SQL para insertar un nuevo usuario en la base de datos
                 sql_command = text("""
-                                        EXECUTE [dbo].[InsertUser]
-                                            @nombre = :nombre,
-                                            @apellidos = :apellidos,
-                                            @email = :email,
-                                            @telefono = :telefono,
-                                            @contrasena = :contrasena,
-                                            @fecha_nacimiento = :fecha_nacimiento;
-                                        """)
+                    EXECUTE [dbo].[InsertUser]
+                    @nombre = :nombre,
+                    @apellidos = :apellidos,
+                    @email = :email,
+                    @telefono = :telefono,
+                    @contrasena = :contrasena,
+                    @fecha_nacimiento = :fecha_nacimiento;
+                """)
+                
+                # Datos del usuario a insertar
                 data = {
-                                "nombre": name,
-                                "apellidos": lastNames,
-                                "email": email,
-                                "telefono": tel,
-                                "contrasena": password1,
-                                "fecha_nacimiento": dateOfBirth
-                            }
+                    "nombre": name,
+                    "apellidos": lastNames,
+                    "email": email,
+                    "telefono": tel,
+                    "contrasena": password1,
+                    "fecha_nacimiento": dateOfBirth
+                }
                 
+                session.execute(sql_command, data)  # Ejecutar el comando SQL con los datos del usuario
+                session.commit()  # Confirmar los cambios en la base de datos
                 
-                
-                
-                session.execute(sql_command, data)
-                session.commit()
-                
-                flash('Cuenta creada', category='success')
-                return  render_template("signPage.html")
-                # Remember to add code to save the user or handle registration logic here
+                flash('Cuenta creada', category='success')  # Mostrar un mensaje de éxito
+                return render_template("signPage.html")  # Redirigir a la página de inicio de sesión y registro
             
-    elif action == 'login':
-        if request.method == 'POST':
+    elif action == 'login':  # Si el valor de 'action' es 'login'
+        if request.method == 'POST':  # Si la solicitud es un POST
+            # Obtener los datos del formulario de inicio de sesión
             loginEmail = request.form.get('login-email')
             loginPass = request.form.get('login-password')
             
             signInInfo = [loginEmail, loginPass]
-            # Add code to handle login logic here
 
-   
-    
-        
-        
-        
-        
-           
-    return  render_template("signPage.html")
+            # Comando SQL para obtener el usuario por correo electrónico
+            sql_command = text("""
+                SELECT contrasena FROM users WHERE email = :email
+            """)
+            result = session.execute(sql_command, {'email': loginEmail}).fetchone()
+            
+            if result:  # Si se encontró el usuario
+                stored_password = result[0]  # Obtener la contraseña almacenada
+                if check_password_hash(stored_password, loginPass):  # Verificar la contraseña
+                    flash('Logged in successfully!', category='success')
+                    return redirect(url_for('views.home'))  # Redirigir a la página principal
+                else:
+                    flash('Contraseña Incorrecta, Intenta de nuevo.', category='error')
+            else:
+                flash('Email inexistente.', category='error')
+
+    return render_template("signPage.html")  # Renderizar la plantilla de la página de inicio de sesión y registro
