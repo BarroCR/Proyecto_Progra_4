@@ -3,5 +3,7 @@
 
 Cosas necesarias a instalar
 
--NodeJS
+-Flask
+-SQLAlchemy
+-pymssql
 

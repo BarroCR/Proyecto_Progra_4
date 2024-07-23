@@ -5,38 +5,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet"  href="{{ url_for('static', filename='signPageCSS.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='signPageCSS.css') }}">
     <title>Login Page</title>
 </head>
 
 <body class="body-profile">
 
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                {% if category == 'error' %}
+                    <div  role="alert">
+                        {{ message }}
+                        
+                            
+                        </button>
+                    </div>
+                {% else %}
+                    <div  role="alert">
+                        {{ message }}
+                        
+                            
+                        </button>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+
+
+
+
+
+
     <div class="container-profile" id="container-profile">
         <div class="form-container-profile sign-up">
-            <form>
+            <form method="POST" >
                 <h1 class="Regist-header">Crear Cuenta</h1>
-                <input id="register-name" type="text" placeholder="Nombre" required>
-                <input id="register-lastNames" type="text" placeholder="Apellidos" required>
-                <input id="register-email" type="email" placeholder="Email" required>
-                <input id="register-tel" type="text" placeholder="Telefono" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" required>
-                <input id="register-password" type="password" placeholder="Contraseña" required>
-                <input id="register-confirmPassword" type="password" placeholder="Confirmar Contraseña" required>
-                <input id="register-dateOfBirth" type="date" placeholder="Fecha Nacimiento" required>
-                <button>Registrarse</button>
+                <input name="register-name" id="register-name" type="text" placeholder="Nombre" required>
+                <input name="register-lastNames" id="register-lastNames" type="text" placeholder="Apellidos" required>
+                <input name="register-email" id="register-email" type="email" placeholder="Email" required>
+                <input name="register-tel" id="register-tel" type="text" placeholder="Telefono" pattern="[0-9]{8}" required>
+                <input name="register-password" id="register-password" type="password" placeholder="Contraseña" required>
+                <input name="register-confirmPassword" id="register-confirmPassword" type="password" placeholder="Confirmar Contraseña" required>
+                <input name="register-dateOfBirth" id="register-dateOfBirth" type="date" placeholder="Fecha Nacimiento" required>
+                <button type="submit" name="action" value="register">Registrarse</button>
             </form>
-        </div>
+        </div>S
         <div class="form-container-profile sign-in">
-            <form>
+            <form method="POST" >
                 <h1>Iniciar Sesion</h1>
-                <div class="social-icons">
-                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
-                </div>
-                <input id="login-email" type="email" placeholder="Email" required>
-                <input id="login-password" type="password" placeholder="Contraseña" required>
-                <button>Iniciar Sesion</button>
+                <input name="login-email"  id="login-email" type="email" placeholder="Email" required>
+                <input name="login-password" id="login-password" type="password" placeholder="Contraseña" required>
+                <button type="submit" name="action" value="login">Iniciar Sesion</button>
             </form>
         </div>
         <div class="toggle-container">
@@ -56,6 +78,8 @@
     </div>
 
     <script src="{{ url_for('static', filename='profile.js') }}"></script>
+
+   
 
 </body>
 
