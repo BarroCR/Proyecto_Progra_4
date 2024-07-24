@@ -2,6 +2,8 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import session
 from sqlalchemy import text
+from flask_login import login_user, login_required, logout_user, current_user
+from .models import User
 
 # Crear un objeto Blueprint llamado 'auth'
 auth = Blueprint('auth', __name__)
@@ -39,7 +41,7 @@ def signPage():
                 """)
                 
                 # Datos del usuario a insertar
-                data = {
+                user = {
                     "nombre": name,
                     "apellidos": lastNames,
                     "email": email,
@@ -48,10 +50,11 @@ def signPage():
                     "fecha_nacimiento": dateOfBirth
                 }
                 
-                session.execute(sql_command, data)  # Ejecutar el comando SQL con los datos del usuario
+                session.execute(sql_command, user)  # Ejecutar el comando SQL con los datos del usuario
                 session.commit()  # Confirmar los cambios en la base de datos
                 
                 flash('Cuenta creada', category='success')  # Mostrar un mensaje de éxito
+                
                 return render_template("signPage.html")  # Redirigir a la página de inicio de sesión y registro
             
     elif action == 'login':  # Si el valor de 'action' es 'login'
@@ -60,18 +63,20 @@ def signPage():
             loginEmail = request.form.get('login-email')
             loginPass = request.form.get('login-password')
             
-            signInInfo = [loginEmail, loginPass]
-
-            # Comando SQL para obtener el usuario por correo electrónico
             sql_command = text("""
                 SELECT contrasena FROM users WHERE email = :email
             """)
-            result = session.execute(sql_command, {'email': loginEmail}).fetchone()
             
-            if result:  # Si se encontró el usuario
-                stored_password = result[0]  # Obtener la contraseña almacenada
+            
+            # Comando SQL para obtener el usuario por correo electrónico
+            
+            user = session.query(User).filter_by(email=loginEmail).first()
+            
+            if user:  # Si se encontró el usuario
+                stored_password = user.contrasena  # Obtener la contraseña almacenada
                 if check_password_hash(stored_password, loginPass):  # Verificar la contraseña
-                    flash('Logged in successfully!', category='success')
+                    flash('Inicio de sesion exitoso!', category='success')
+                    login_user(user, remember=True)
                     return redirect(url_for('views.home'))  # Redirigir a la página principal
                 else:
                     flash('Contraseña Incorrecta, Intenta de nuevo.', category='error')
@@ -79,3 +84,11 @@ def signPage():
                 flash('Email inexistente.', category='error')
 
     return render_template("signPage.html")  # Renderizar la plantilla de la página de inicio de sesión y registro
+
+
+@auth.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    
+    return redirect(url_for('auth.signPage'))  # Redirigir a la página de inicio de sesión y registro
