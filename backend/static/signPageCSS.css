@@ -51,7 +51,7 @@
 }
 
 .container-profile button{
-    background-color: #2C3E50;
+    background-color: #1A1A1A;
     color: #fff;
     font-size: 12px;
     padding: 10px 45px;
@@ -167,7 +167,7 @@
 .toggle{
     background-color: #2C3E50;
     height: 100%;
-    background: linear-gradient(to right, #566c82, #2C3E50);
+    background: linear-gradient(to right, #001F3B, #1A1A1A);
     color: #fff;
     position: relative;
     left: -100%;
