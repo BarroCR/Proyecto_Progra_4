@@ -7,3 +7,6 @@ Cosas necesarias a instalar
 -SQLAlchemy
 -pymssql
 -flask-login
+
+
+Para correr abrir la pagina es necesario instalar todas las librerias anterior y correr el archivo llamado main.py
