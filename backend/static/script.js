@@ -6,9 +6,11 @@ document.addEventListener('DOMContentLoaded', function () {
         button.addEventListener('click', function () {
             const theme = this.getAttribute('data-theme');
             if (theme === 'light') {
-                themeLink.href = 'https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/flatly/bootstrap.min.css';
+                themeLink.href = 'https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/lux/bootstrap.min.css';
+                document.body.removeAttribute('data-bs-theme');
             } else if (theme === 'dark') {
-                themeLink.href = 'https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/darkly/bootstrap.min.css';
+                themeLink.href = 'https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/lux/bootstrap.min.css';
+                document.body.setAttribute('data-bs-theme', 'dark');;
             }
         });
     });
