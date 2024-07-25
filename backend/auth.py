@@ -24,6 +24,8 @@ def signPage():
             confirmPass = request.form.get('register-confirmPassword')
             dateOfBirth = request.form.get('register-dateOfBirth')
             
+            
+            
             if password != confirmPass:  # Si las contraseñas no coinciden
                 flash('Las contraseñas no coinciden, por favor intenta de nuevo', category='error')
             else:
