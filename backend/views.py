@@ -51,20 +51,10 @@ def poll():
         time.sleep(5)
             
             
-    
-   
 
 @views.route('/')
 @login_required
 def home():
-    
-    data=poll()
-    save_data_to_file(data)
-    
-    
-    
-    
-    load_data_from_file()  # Carga la información del archivo
     
     
     return render_template("main.html")
