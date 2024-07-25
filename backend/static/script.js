@@ -73,7 +73,12 @@ function updateTable(data) {
         row.appendChild(latitudeCell);
         
         tableBody.appendChild(row);
+
+        L.marker([earthquake.latitude, earthquake.longitude]).addTo(map)
+        .bindPopup('Terremoto de magnitud ' + earthquake.magnitude + ' en ' + earthquake.place + ' el ' + date.toLocaleString())
+        .openPopup();
     });
 }
         
 document.addEventListener('DOMContentLoaded', fetchEarthquakeData);
+
