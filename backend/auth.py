@@ -1,9 +1,11 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import session
 from sqlalchemy import text
 from flask_login import login_user, login_required, logout_user, current_user
 from .models import User
+import json
+
 
 # Crear un objeto Blueprint llamado 'auth'
 auth = Blueprint('auth', __name__)
@@ -94,3 +96,25 @@ def logout():
     logout_user()
     
     return redirect(url_for('auth.signPage'))  # Redirigir a la página de inicio de sesión y registro
+
+def load_earthquake_data():
+    with open('earthquake_data.json', 'r') as file:
+        data = json.load(file)
+    return data
+
+@auth.route('/poll', methods=['GET'])
+def poll():
+    data = load_earthquake_data()
+    earthquakes = []
+    for feature in data['features']:
+        properties = feature['properties']
+        geometry = feature['geometry']
+        earthquake = {
+            'magnitude': properties['mag'],
+            'place': properties['place'],
+            'time': properties['time'],
+            'longitude': geometry['coordinates'][0],
+            'latitude': geometry['coordinates'][1]
+        }
+        earthquakes.append(earthquake)
+    return jsonify(earthquakes)

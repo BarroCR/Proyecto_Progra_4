@@ -40,14 +40,37 @@ def load_data_from_file(filename='earthquake_data.json'):
 
 def poll():
     client_state = request.args.get('state')
+    earthquakes = []  # Create an empty list to store earthquake data
     
     while True:
         data = fetch_earthquakes()
+        #print(data)
         if data:
             save_data_to_file(data)  # Guarda la información en un archivo
+            
+            # Obtener la información de los terremotos
+            for feature in data['features']:
+                mag = feature['properties']['mag']
+                place = feature['properties']['place']
+                time = feature['properties']['time']
+                longitude = feature['geometry']['coordinates'][0]
+                latitude = feature['geometry']['coordinates'][1]
+                
+                earthquake = {
+                    'mag': mag,
+                    'place': place,
+                    'time': time,
+                    'longitude': longitude,
+                    'latitude': latitude
+                }
+                
+                # Append the earthquake dictionary to the list
+                earthquakes.append(earthquake)
+                print(earthquakes)
+                
         json_state = str(data)
         if json_state != client_state:
-            return jsonify(data)
+            return jsonify(earthquakes)
         time.sleep(5)
             
             
@@ -56,5 +79,5 @@ def poll():
 @login_required
 def home():
     
-    
+    poll()
     return render_template("main.html")
