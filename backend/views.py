@@ -81,3 +81,10 @@ def home():
     
     poll()
     return render_template("main.html")
+
+@views.route('/logs', methods=['GET']) 
+@login_required
+def logs():
+
+    poll()
+    return render_template("logs.html")
