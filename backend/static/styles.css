@@ -26,6 +26,16 @@
     margin-left: 7%;
 }
 
+.news-title {
+    margin: 5%;
+    margin-left: 7%;
+}
+
+.logs-title {
+    margin: 5%;
+    margin-left: 7%;
+}
+
 .map {
     width: 80%;
     height: 600px;
@@ -38,14 +48,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 5%;
-    margin-bottom: 5%;
     overflow-y: auto;
-    height: 200px;
+    height: 400px;
     width: 100%;
-    padding: 35px;
+    padding: 0;
     box-sizing: border-box;
-    transform: scale(0.8);
+    /* transform: scale(0.8); */
 }
 
 [data-bs-theme="dark"] h1,
