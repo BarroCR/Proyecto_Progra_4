@@ -23,17 +23,22 @@
 
 .home-title {
     margin: 5%;
-    margin-left: 7%;
+    margin-left: 0;
 }
 
 .news-title {
     margin: 5%;
-    margin-left: 7%;
+    margin-left: 0;
 }
 
 .logs-title {
     margin: 5%;
-    margin-left: 7%;
+    margin-left: 0;
+}
+
+.about-title {
+    margin: 5%;
+    margin-left: 0;
 }
 
 .map {

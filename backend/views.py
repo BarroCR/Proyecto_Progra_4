@@ -88,3 +88,14 @@ def logs():
 
     poll()
     return render_template("logs.html")
+
+
+@views.route('/news') 
+@login_required
+def news():
+    return render_template("news.html")
+
+@views.route('/about') 
+@login_required
+def about():
+    return render_template("about.html")
