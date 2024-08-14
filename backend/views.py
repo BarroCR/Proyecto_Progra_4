@@ -11,7 +11,7 @@ def fetch_earthquakes():
         url = 'https://earthquake.usgs.gov/fdsnws/event/1/query'
         params = {
             'format': 'geojson',
-            'starttime': '2024-07-24T00:00:00' ,
+            'starttime': '2024-08-12T00:00:00' ,
             'minmagnitude': 3
             
         }

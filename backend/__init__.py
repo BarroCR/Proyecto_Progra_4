@@ -8,7 +8,7 @@ from flask_login import LoginManager
 database = 'Proyecto_Progra_4'
 username = 'sqlserver'
 password = 'contraseña'
-server = '34.42.116.250'  # Replace with your actual server address
+server = '35.184.98.137'  # Replace with your actual server address
 
 # Connection string for pymssql
 connection_string = f'mssql+pymssql://{username}:{password}@{server}/{database}'
