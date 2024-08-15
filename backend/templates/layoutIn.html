@@ -42,17 +42,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/about">About</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                            aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Separated link</a>
-                        </div>
-                    </li>
                     <li class="nav-item dropdown" data-bs-theme="light">
                         <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="theme-menu"
                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
@@ -86,7 +75,7 @@
                         </div>
                         <hr>
                         
-                        <a href="#" class="sub-menu-link">
+                        <a href="#" class="sub-menu-link" id="edit-profile-link" onclick="showUpdateModal()">
                             <img src="{{ url_for('static', filename='images/profile.png') }}">
                             <p>Editar Perfil</p>
                             <span></span>
@@ -106,6 +95,42 @@
     <div class="container">
         {% block content %}
         {% endblock %}
+    </div>
+
+    <div class="modal-update-wrp invisible" id="modal-update-wrp">
+        <div class="modal-container">
+            <form id="update-user-form" enctype="multipart/form-data">
+                <fieldset class="border p-4">
+                    <span class="close" onclick="closeUpdateModal()">&times;</span>
+                    <hr>
+                    <legend class="w-auto px-2">Actualizar Usuario</legend>
+                    <div class="form-group">
+                        <label for="update_name" class="form-label">Nombre:</label>
+                        <input type="text" id="update_name" name="update_name" class="form-control" maxlength="25" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="update_lastName" class="form-label">Apellido:</label>
+                        <input type="text" id="update_lastName" name="update_lastName" class="form-control" maxlength="100" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="update_password" class="form-label">Contraseña:</label>
+                        <input type="password" id="update_password" name="update_password" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="update_date" class="form-label">Fecha de Nacimiento:</label>
+                        <input type="date" id="update_date" name="update_date" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="profile_photo" class="form-label mt-4">Foto de Perfil</label>
+                        <input type="file" id="profile_photo" name="profile_photo" class="form-control" accept="image/*">
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-outline-light">Actualizar</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
     </div>
 
     <footer class="home-footer">

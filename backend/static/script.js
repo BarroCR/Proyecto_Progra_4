@@ -87,3 +87,25 @@ function updateTable(data) {
         
 document.addEventListener('DOMContentLoaded', fetchEarthquakeData);
 
+const showUpdateModal = (userObject) => {
+        const modalWrp = document.querySelector(".modal-update-wrp");
+        modalWrp.classList.remove("invisible");
+    
+        // Prellenar el formulario con los datos del usuario
+        document.getElementById('update_name').value = userObject.name;
+        document.getElementById('update_lastName').value = userObject.lastName;
+        document.getElementById('update_password').value = userObject.password;
+        document.getElementById('update_date').value = userObject.dateOfBirth;
+    
+        // Manejar el evento de actualización
+        modalWrp.querySelector(".btn-primary").addEventListener("click", (event) => {
+        event.preventDefault();
+        updateUser(userObject);
+        modalWrp.classList.add("invisible");
+    });
+};
+
+function closeUpdateModal() {
+    const modalWrp = document.querySelector(".modal-update-wrp");
+    modalWrp.classList.add("invisible");
+}
