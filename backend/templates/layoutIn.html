@@ -69,11 +69,17 @@
 
                 <div class="sub-menu-wrap" id="subMenu">
                     <div class="sub-menu">
-                        <div class="user-info">
+                        <div class="user-info" data-username="{{ current_user.nombre }}" data-lastname="{{ current_user.apellidos }}" data-password="{{ current_user.contrasena }}" data-birthdate="{{ current_user.fecha_nacimiento }}">
                             <img src="{{ url_for('static', filename='images/icons8-user-64.png') }}">
-                            <h3>User Name</h3>
+                            <h3 id="user-name"></h3>
                         </div>
                         <hr>
+
+                        <a href="#" class="sub-menu-link" id="upload-profile-pic" onclick="showProfilePicModal()">
+                            <img src="{{ url_for('static', filename='images/setting.png') }}">
+                            <p>Foto de Perfil</p>
+                            <span></span>
+                        </a>
                         
                         <a href="#" class="sub-menu-link" id="edit-profile-link" onclick="showUpdateModal()">
                             <img src="{{ url_for('static', filename='images/profile.png') }}">
@@ -120,13 +126,31 @@
                         <label for="update_date" class="form-label">Fecha de Nacimiento:</label>
                         <input type="date" id="update_date" name="update_date" class="form-control" required>
                     </div>
+                    
+                    <hr>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-outline-light">Actualizar</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-upload-pic-wrp invisible" id="modal-upload-pic-wrp">
+        <div class="modal-container">
+            <form id="profile-pic-form">
+                <fieldset class="border p-4">
+                    <span class="close" onclick="closeProfilePicModal()">&times;</span> 
+                    <hr>
+                    <legend class="w-auto px-2">Subir Foto de Perfil</legend>
                     <div class="form-group">
                         <label for="profile_photo" class="form-label mt-4">Foto de Perfil</label>
                         <input type="file" id="profile_photo" name="profile_photo" class="form-control" accept="image/*">
                     </div>
+
                     <hr>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-outline-light">Actualizar</button>
+                        <button type="submit" class="btn btn-outline-light">Subir Foto</button>
                     </div>
                 </fieldset>
             </form>

@@ -117,7 +117,7 @@
 }
 
 .sub-menu-wrap.open-menu {
-    max-height: 400px;
+    max-height: 255px;
 }
 
 .sub-menu {
@@ -136,7 +136,7 @@
 }
 
 .user-info img {
-    width: 60px;
+    width: 45px;
     border-radius: 50%;
     margin-right: 15px;
 }
@@ -191,13 +191,28 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+    color: #fff;
+}
+
+.modal-upload-pic-wrp {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
     z-index: 1000;
     color: #fff;
 }
 
 .modal-container {
     padding: 1.5rem;
+    min-width: 55ch;
     max-width: 55ch;
     display: grid;
     gap: 1rem;

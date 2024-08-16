@@ -14,6 +14,23 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
+
+    var userInfoElement = document.querySelector('.user-info');
+    var userNameElement = document.getElementById('user-name');
+    var userName = userInfoElement.getAttribute('data-username');
+    if (userNameElement) {
+        userNameElement.textContent = userName;
+    }
+
+    var updateNameInput = document.getElementById('update_name');
+    var updateLastNameInput = document.getElementById('update_lastName');
+    var updatePasswordInput = document.getElementById('update_password');
+    var updateDateInput = document.getElementById('update_date');
+
+    updateNameInput.value = userInfoElement.getAttribute('data-username');
+    updateLastNameInput.value = userInfoElement.getAttribute('data-lastname');
+    updatePasswordInput.value = userInfoElement.getAttribute('data-password');
+    updateDateInput.value = userInfoElement.getAttribute('data-birthdate');
 });
 
 let subMenu = document.getElementById('subMenu');
@@ -87,25 +104,23 @@ function updateTable(data) {
         
 document.addEventListener('DOMContentLoaded', fetchEarthquakeData);
 
-const showUpdateModal = (userObject) => {
-        const modalWrp = document.querySelector(".modal-update-wrp");
-        modalWrp.classList.remove("invisible");
-    
-        // Prellenar el formulario con los datos del usuario
-        document.getElementById('update_name').value = userObject.name;
-        document.getElementById('update_lastName').value = userObject.lastName;
-        document.getElementById('update_password').value = userObject.password;
-        document.getElementById('update_date').value = userObject.dateOfBirth;
-    
-        // Manejar el evento de actualización
-        modalWrp.querySelector(".btn-primary").addEventListener("click", (event) => {
-        event.preventDefault();
-        updateUser(userObject);
-        modalWrp.classList.add("invisible");
-    });
+const showUpdateModal = () => {
+    const modalWrp = document.querySelector(".modal-update-wrp");
+    modalWrp.classList.remove("invisible");
 };
 
 function closeUpdateModal() {
     const modalWrp = document.querySelector(".modal-update-wrp");
     modalWrp.classList.add("invisible");
+}
+
+function showProfilePicModal() {
+    const modalWrp = document.querySelector(".modal-upload-pic-wrp");
+    modalWrp.classList.remove("invisible");
+}
+
+function closeProfilePicModal() {
+    const modalWrp = document.querySelector(".modal-upload-pic-wrp");
+    modalWrp.classList.add("invisible");
+
 }
