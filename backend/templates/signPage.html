@@ -48,12 +48,13 @@
                 <input name="register-lastNames" id="register-lastNames" type="text" placeholder="Apellidos" required>
                 <input name="register-email" id="register-email" type="email" placeholder="Email" required>
                 <input name="register-tel" id="register-tel" type="text" placeholder="Telefono" pattern="[0-9]{8}" required>
-                <input name="register-password" id="register-password" type="password" placeholder="Contraseña" required>
+                <input name="register-password" id="register-password" type="password" placeholder="Contraseña" required onkeyup="checkPasswordStrength()">
+                <span id="password-strength" class="password-strength">Nivel de seguridad de la contraseña.</span>
                 <input name="register-confirmPassword" id="register-confirmPassword" type="password" placeholder="Confirmar Contraseña" required>
                 <input name="register-dateOfBirth" id="register-dateOfBirth" type="date" placeholder="Fecha Nacimiento" required>
                 <button type="submit" name="action" value="register">Registrarse</button>
             </form>
-        </div>S
+        </div>
         <div class="form-container-profile sign-in">
             <form method="POST" >
                 <h1>Iniciar Sesion</h1>
