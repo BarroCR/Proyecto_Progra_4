@@ -35,7 +35,7 @@ def signPage():
                 
                 # Comando SQL para insertar un nuevo usuario en la base de datos
                 sql_command = text("""
-                    EXECUTE [dbo].[InsertUser]
+                    EXECUTE [dbo].[sp_registrarusuario]
                     @nombre = :nombre,
                     @apellidos = :apellidos,
                     @email = :email,

@@ -8,7 +8,40 @@
     <h1>Geolocalizador de Sismos</h1>
 </div>
 
-<div class="map" id="map" ></div>
+<div class="main-map-container">
+    <div class="filter-container">
+        <form id="filter-form">
+            <fieldset>
+                <legend>Filtro de Busqueda</legend>
+                <div class="mag-select-container">
+                    <label for="mag-select" class="form-label mt-4">Seleccione la Magnitud</label>
+                    <select class="form-select" id="mag-select">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                </div>
+    
+                <div>
+                    <label for="sismo-date"> Fecha de Inicio
+                        <input class="form-date-input" name="sismo-date" id="sismo-date" type="date" placeholder="Fecha Inicio" required>
+                    </label>
+                </div>
+    
+                <div>
+                    <button id="btn-filter" type="submit" class="btn btn-primary">Enviar</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    
+    
+    
+    <div class="map" id="map" ></div>
+</div>
+
 
 <div class="News" style="display: none;">
     <h2>Noticias</h2>

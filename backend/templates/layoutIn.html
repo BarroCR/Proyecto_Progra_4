@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Geolocalizador de Sismos{% endblock %}</title>
-    <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/png">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.png') }}" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/lux/bootstrap.min.css" rel="stylesheet"
         id="theme-link">
     <link id="theme-link" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
@@ -15,11 +15,11 @@
 </head>
 
 <body class="theme-dark">
-    <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
 
-                <img class="logo1" src="{{ url_for('static', filename='logo1.png') }}" alt="Logo">
+                <img class="logo1" src="{{ url_for('static', filename='images/logo1.png') }}" alt="Logo">
 
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
@@ -40,18 +40,7 @@
                         <a class="nav-link" href="/news">Noticias</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                            aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Separated link</a>
-                        </div>
+                        <a class="nav-link" href="/about">About</a>
                     </li>
                     <li class="nav-item dropdown" data-bs-theme="light">
                         <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="theme-menu"
@@ -76,10 +65,35 @@
                     </li>
                 </ul>
 
-            
-                <form class="d-flex" action="/logout" method="get" >
-                    <button  id="logOut" class="btn btn-primary my-2 my-sm-0" type="submit" >Cerrar Sesion</button>
-                </form>
+                <img class="user-pic" src="{{ url_for('static', filename='images/icons8-user-64.png') }}" onclick="toggleMenu()">
+
+                <div class="sub-menu-wrap" id="subMenu">
+                    <div class="sub-menu">
+                        <div class="user-info" data-username="{{ current_user.nombre }}" data-lastname="{{ current_user.apellidos }}" data-password="{{ current_user.contrasena }}" data-birthdate="{{ current_user.fecha_nacimiento }}">
+                            <img src="{{ url_for('static', filename='images/icons8-user-64.png') }}">
+                            <h3 id="user-name"></h3>
+                        </div>
+                        <hr>
+
+                        <a href="#" class="sub-menu-link" id="upload-profile-pic" onclick="showProfilePicModal()">
+                            <img src="{{ url_for('static', filename='images/setting.png') }}">
+                            <p>Foto de Perfil</p>
+                            <span></span>
+                        </a>
+                        
+                        <a href="#" class="sub-menu-link" id="edit-profile-link" onclick="showUpdateModal()">
+                            <img src="{{ url_for('static', filename='images/profile.png') }}">
+                            <p>Editar Perfil</p>
+                            <span></span>
+                        </a>
+
+                        <a href="/logout" class="sub-menu-link">
+                            <img src="{{ url_for('static', filename='images/logout.png') }}">
+                            <p>Cerrar Sesion</p>
+                            <span></span>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
@@ -89,10 +103,64 @@
         {% endblock %}
     </div>
 
+    <div class="modal-update-wrp invisible" id="modal-update-wrp">
+        <div class="modal-container">
+            <form id="update-user-form" enctype="multipart/form-data">
+                <fieldset class="border p-4">
+                    <span class="close" onclick="closeUpdateModal()">&times;</span>
+                    <hr>
+                    <legend class="w-auto px-2">Actualizar Usuario</legend>
+                    <div class="form-group">
+                        <label for="update_name" class="form-label">Nombre:</label>
+                        <input type="text" id="update_name" name="update_name" class="form-control" maxlength="25" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="update_lastName" class="form-label">Apellido:</label>
+                        <input type="text" id="update_lastName" name="update_lastName" class="form-control" maxlength="100" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="update_password" class="form-label">Contraseña:</label>
+                        <input type="password" id="update_password" name="update_password" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="update_date" class="form-label">Fecha de Nacimiento:</label>
+                        <input type="date" id="update_date" name="update_date" class="form-control" required>
+                    </div>
+                    
+                    <hr>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-outline-light">Actualizar</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-upload-pic-wrp invisible" id="modal-upload-pic-wrp">
+        <div class="modal-container">
+            <form id="profile-pic-form">
+                <fieldset class="border p-4">
+                    <span class="close" onclick="closeProfilePicModal()">&times;</span> 
+                    <hr>
+                    <legend class="w-auto px-2">Subir Foto de Perfil</legend>
+                    <div class="form-group">
+                        <label for="profile_photo" class="form-label mt-4">Foto de Perfil</label>
+                        <input type="file" id="profile_photo" name="profile_photo" class="form-control" accept="image/*">
+                    </div>
+
+                    <hr>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-outline-light">Subir Foto</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
     <footer class="home-footer">
         <p class="blockquote">Brian Barrantes, Luis Adrian Corrales, Gabriel Cespedes, Kendal Gonzalez | @Proyecto ProgramacionIV Earthquake API</p>
         <p class="blockquote-footer">USGS Earthquake API</p>
-        <p class="blockquote-footer">Places API | Console Cloud</p>
+        <p class="blockquote-footer">https://leafletjs.com/ | Console Cloud</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>

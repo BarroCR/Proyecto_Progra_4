@@ -14,7 +14,29 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
+
+    var userInfoElement = document.querySelector('.user-info');
+    var userNameElement = document.getElementById('user-name');
+    var userName = userInfoElement.getAttribute('data-username');
+    if (userNameElement) {
+        userNameElement.textContent = userName;
+    }
+
+    var updateNameInput = document.getElementById('update_name');
+    var updateLastNameInput = document.getElementById('update_lastName');
+    var updatePasswordInput = document.getElementById('update_password');
+    var updateDateInput = document.getElementById('update_date');
+
+    updateNameInput.value = userInfoElement.getAttribute('data-username');
+    updateLastNameInput.value = userInfoElement.getAttribute('data-lastname');
+    updatePasswordInput.value = userInfoElement.getAttribute('data-password');
+    updateDateInput.value = userInfoElement.getAttribute('data-birthdate');
 });
+
+let subMenu = document.getElementById('subMenu');
+function toggleMenu() {
+    subMenu.classList.toggle('open-menu');
+}
 
 
 var map = L.map('map').setView([0, 0], 2);
@@ -82,3 +104,23 @@ function updateTable(data) {
         
 document.addEventListener('DOMContentLoaded', fetchEarthquakeData);
 
+const showUpdateModal = () => {
+    const modalWrp = document.querySelector(".modal-update-wrp");
+    modalWrp.classList.remove("invisible");
+};
+
+function closeUpdateModal() {
+    const modalWrp = document.querySelector(".modal-update-wrp");
+    modalWrp.classList.add("invisible");
+}
+
+function showProfilePicModal() {
+    const modalWrp = document.querySelector(".modal-upload-pic-wrp");
+    modalWrp.classList.remove("invisible");
+}
+
+function closeProfilePicModal() {
+    const modalWrp = document.querySelector(".modal-upload-pic-wrp");
+    modalWrp.classList.add("invisible");
+
+}
