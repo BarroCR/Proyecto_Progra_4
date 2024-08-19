@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var userInfoElement = document.querySelector('.user-info');
     var userNameElement = document.getElementById('user-name');
     var userName = userInfoElement.getAttribute('data-username');
+    var userId = userInfoElement.getAttribute('data-id'); 
     if (userNameElement) {
         userNameElement.textContent = userName;
     }
@@ -107,6 +108,8 @@ document.addEventListener('DOMContentLoaded', fetchEarthquakeData);
 const showUpdateModal = () => {
     const modalWrp = document.querySelector(".modal-update-wrp");
     modalWrp.classList.remove("invisible");
+    const success_span = document.getElementById('success_span')
+    success_span.textContent = 'Resultado del cambio';
 };
 
 function closeUpdateModal() {
@@ -124,3 +127,43 @@ function closeProfilePicModal() {
     modalWrp.classList.add("invisible");
 
 }
+
+document.getElementById('update-user-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const userId = form.getAttribute('data-id');
+    const data = {
+        update_name: document.getElementById('update_name').value,
+        update_lastName: document.getElementById('update_lastName').value,
+        update_password: document.getElementById('update_password').value,
+        update_date: document.getElementById('update_date').value,
+    };
+
+    const success_span = document.getElementById('success_span')
+
+    fetch(`/updateUser/${userId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            success_span.textContent = 'Usuario actualizado con éxito';
+            console.log('Usuario actualizado con éxito');
+            setTimeout(() => {
+                window.location.reload();
+            }, 3000);
+        } else {
+            success_span.textContent = 'ERROR: No se pudo actualizar el usuario';
+            console.error('Error:', error);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+});
+

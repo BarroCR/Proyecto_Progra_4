@@ -118,3 +118,39 @@ def poll():
         }
         earthquakes.append(earthquake)
     return jsonify(earthquakes)
+
+@auth.route('/updateUser/<int:id_user>', methods=['PUT'])
+@login_required
+def updateUser(id_user):
+    data = request.get_json()
+    update_name = data.get('update_name')
+    update_lastName = data.get('update_lastName')
+    update_password = data.get('update_password')
+    update_date = data.get('update_date')
+
+    try:
+        hashed_password = generate_password_hash(update_password)
+
+        sql_command = text("""
+            EXEC [dbo].[sp_update_user_data]
+                @id_user = :id_user,
+                @nombre = :nombre,
+                @apellidos = :apellidos,
+                @contrasena = :contrasena,
+                @fecha_nacimiento = :fecha_nacimiento;
+        """)
+
+        user_data = {
+            "id_user": id_user,
+            "nombre": update_name,
+            "apellidos": update_lastName,
+            "contrasena": hashed_password,
+            "fecha_nacimiento": update_date
+        }
+
+        session.execute(sql_command, user_data)  
+        session.commit()  
+        return jsonify({'success': True}), 200
+    except Exception as e:
+        print(e)
+        return jsonify({'success': False, 'error': str(e)}), 500
