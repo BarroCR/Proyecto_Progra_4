@@ -156,7 +156,7 @@ document.getElementById('update-user-form').addEventListener('submit', function(
             console.log('Usuario actualizado con éxito');
             setTimeout(() => {
                 window.location.reload();
-            }, 3000);
+            }, 1000);
         } else {
             success_span.textContent = 'ERROR: No se pudo actualizar el usuario';
             console.error('Error:', error);
