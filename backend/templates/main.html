@@ -1,65 +1,70 @@
-{% extends 'layoutIn.html' %}
-
-{% block title %}Geolocalizador de Sismos{% endblock %}
-
-{% block content %}
+{% extends 'layoutIn.html' %} {% block title %}Geolocalizador de Sismos{%
+endblock %} {% block content %}
 
 <div class="home-title">
-    <h1>Geolocalizador de Sismos</h1>
+  <h1>Geolocalizador de Sismos</h1>
 </div>
 
 <div class="main-map-container">
-    <div class="filter-container">
-        <form id="filter-form">
-            <fieldset>
-                <legend>Filtro de Busqueda</legend>
-                <div class="mag-select-container">
-                    <label for="mag-select" class="form-label mt-4">Seleccione la Magnitud</label>
-                    <select class="form-select" id="mag-select">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
-                </div>
-    
-                <div>
-                    <label for="sismo-date"> Fecha de Inicio
-                        <input class="form-date-input" name="sismo-date" id="sismo-date" type="date" placeholder="Fecha Inicio" required>
-                    </label>
-                </div>
-    
-                <div>
-                    <button id="btn-filter" type="submit" class="btn btn-primary">Enviar</button>
-                </div>
-            </fieldset>
-        </form>
-    </div>
-    
-    
-    
-    <div class="map" id="map" ></div>
+  <div class="filter-container">
+    <form id="filter-form" method="POST" action="/">
+      <fieldset>
+        <legend>Filtro de Busqueda</legend>
+        <div class="mag-select-container">
+          <label for="mag-select" class="form-label mt-4"
+            >Seleccione la Magnitud</label
+          >
+          <select class="form-select" id="mag-select" name="mag-select">
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="sismo-date">
+            Fecha de Inicio
+            <input
+              class="form-date-input"
+              name="sismo-date"
+              id="sismo-date"
+              type="date"
+              placeholder="Fecha Inicio"
+              required
+            />
+          </label>
+        </div>
+
+        <div>
+          <button id="btn-filter" type="submit" class="btn btn-primary">
+            Filtrar
+          </button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+
+  <div class="map" id="map"></div>
 </div>
 
-
-<div class="News" style="display: none;">
-    <h2>Noticias</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Magnitud</th>
-                <th>Lugar</th>
-                <th>Tiempo</th>
-                <th>Longitud</th>
-                <th>Latitud</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-            </tr>
-        </tbody>
-    </table>
+<div class="News" style="display: none">
+  <h2>Noticias</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Magnitud</th>
+        <th>Lugar</th>
+        <th>Tiempo</th>
+        <th>Longitud</th>
+        <th>Latitud</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr></tr>
+    </tbody>
+  </table>
 </div>
 
 {% endblock %}
