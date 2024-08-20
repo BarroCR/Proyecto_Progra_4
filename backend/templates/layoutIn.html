@@ -105,7 +105,7 @@
 
     <div class="modal-update-wrp invisible" id="modal-update-wrp">
         <div class="modal-container">
-            <form id="update-user-form" enctype="multipart/form-data">
+            <form id="update-user-form" data-id="{{ current_user.get_id() }}">
                 <fieldset class="border p-4">
                     <span class="close" onclick="closeUpdateModal()">&times;</span>
                     <hr>
@@ -129,8 +129,13 @@
                     
                     <hr>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-outline-light">Actualizar</button>
+                        <button type="submit" class="btn btn-outline-light" name="action_upd" value="update" required>Actualizar</button>
                     </div>
+                    <hr>
+                    <div class="form-group">
+                        <span id="success_span" class="success_span">Resultado del cambio</span>
+                    </div>
+
                 </fieldset>
             </form>
         </div>
