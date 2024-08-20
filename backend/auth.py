@@ -79,6 +79,13 @@ def signPage():
             if user:  # Si se encontró el usuario
                 stored_password = user.contrasena  # Obtener la contraseña almacenada
                 if check_password_hash(stored_password, loginPass):  # Verificar la contraseña
+
+                    sql_command = text("""
+                        EXEC sp_InsertarHistorial @idUser=:idUser, @estado=1;
+                    """)
+                    session.execute(sql_command, {'idUser': user.idUser})
+                    session.commit()
+
                     flash('Inicio de sesion exitoso!', category='success')
                     login_user(user, remember=True)
                     return redirect(url_for('views.home'))  # Redirigir a la página principal
@@ -93,6 +100,11 @@ def signPage():
 @auth.route('/logout')
 @login_required
 def logout():
+    sql_command = text("""
+        EXEC sp_InsertarHistorial @idUser=:idUser, @estado=0;
+    """)
+    session.execute(sql_command, {'idUser': current_user.idUser})
+    session.commit()
     logout_user()
     
     return redirect(url_for('auth.signPage'))  # Redirigir a la página de inicio de sesión y registro
