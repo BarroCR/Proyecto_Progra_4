@@ -167,3 +167,6 @@ document.getElementById('update-user-form').addEventListener('submit', function(
     });
 });
 
+window.addEventListener('beforeunload', function () {
+    navigator.sendBeacon('/logout');
+});
