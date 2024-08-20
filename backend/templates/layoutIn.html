@@ -65,12 +65,12 @@
                     </li>
                 </ul>
 
-                <img class="user-pic" src="{{ url_for('static', filename='images/icons8-user-64.png') }}" onclick="toggleMenu()">
+                <img id="user-pic" class="user-pic" src="{{ url_for('static', filename='images/icons8-user-64.png') }}" onclick="toggleMenu()">
 
                 <div class="sub-menu-wrap" id="subMenu">
                     <div class="sub-menu">
                         <div class="user-info" data-username="{{ current_user.nombre }}" data-lastname="{{ current_user.apellidos }}" data-password="{{ current_user.contrasena }}" data-birthdate="{{ current_user.fecha_nacimiento }}">
-                            <img src="{{ url_for('static', filename='images/icons8-user-64.png') }}">
+                            <img id="user-pic-submenu" src="{{ url_for('static', filename='images/icons8-user-64.png') }}">
                             <h3 id="user-name"></h3>
                         </div>
                         <hr>
@@ -143,7 +143,7 @@
 
     <div class="modal-upload-pic-wrp invisible" id="modal-upload-pic-wrp">
         <div class="modal-container">
-            <form id="profile-pic-form">
+            <form id="profile-pic-form" enctype="multipart/form-data">
                 <fieldset class="border p-4">
                     <span class="close" onclick="closeProfilePicModal()">&times;</span> 
                     <hr>

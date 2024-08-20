@@ -170,3 +170,32 @@ document.getElementById('update-user-form').addEventListener('submit', function(
 window.addEventListener('beforeunload', function () {
     navigator.sendBeacon('/logout');
 });
+
+
+document.getElementById('profile-pic-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const formData = new FormData();
+    const fileField = document.getElementById('profile_photo');
+
+    formData.append('profile_photo', fileField.files[0]);
+
+    fetch('/upload_profile_pic', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Actualizar la imagen de perfil
+            document.getElementById('user-pic').src = data.filepath;
+            document.getElementById('user-pic-submenu').src = data.filepath;
+            closeProfilePicModal();
+        } else {
+            console.error('Error:', data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+});
