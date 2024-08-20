@@ -7,14 +7,22 @@ import requests
 views = Blueprint('views', __name__)
 
 
-def fetch_earthquakes():
+def fetch_earthquakes(magnitude, startDate):
         url = 'https://earthquake.usgs.gov/fdsnws/event/1/query'
+        print(startDate, magnitude)
+        if startDate is None:
+            startDate = '2024-08-18'  # Valor predeterminado para startDate
+
+        if magnitude is None:
+            magnitude = 3  # Valor predeterminado para magnitude
+        
         params = {
             'format': 'geojson',
-            'starttime': '2024-08-12T00:00:00' ,
-            'minmagnitude': 3
+            'starttime': startDate+'T00:00:00' ,
+            'minmagnitude': magnitude
             
         }
+       
         response = requests.get(url, params=params)
         try:
             response.raise_for_status()  # Check for HTTP errors
@@ -38,13 +46,13 @@ def load_data_from_file(filename='earthquake_data.json'):
     except FileNotFoundError:
         return None
 
-def poll():
+def poll(magnitude, startDate):
     client_state = request.args.get('state')
     earthquakes = []  # Create an empty list to store earthquake data
     
     while True:
-        data = fetch_earthquakes()
-        #print(data)
+        data = fetch_earthquakes(magnitude, startDate )  # Fetch earthquake data
+        
         if data:
             save_data_to_file(data)  # Guarda la información en un archivo
             
@@ -66,7 +74,7 @@ def poll():
                 
                 # Append the earthquake dictionary to the list
                 earthquakes.append(earthquake)
-                print(earthquakes)
+                
                 
         json_state = str(data)
         if json_state != client_state:
@@ -75,18 +83,25 @@ def poll():
             
             
 
-@views.route('/')
+@views.route('/', methods=['GET', 'POST'])
 @login_required
 def home():
-    
-    poll()
+    magnitude = None
+    startDate = None
+    if request.method == 'POST':
+        magnitude = request.form.get('mag-select')
+        startDate = request.form.get('sismo-date')
+        
+    print(magnitude,startDate)
+    poll(magnitude,startDate )
     return render_template("main.html")
 
 @views.route('/logs', methods=['GET']) 
 @login_required
 def logs():
-
-    poll()
+    magnitude = 4
+    startDate = '2024-08-18'
+    poll(magnitude, startDate)
     return render_template("logs.html")
 
 
