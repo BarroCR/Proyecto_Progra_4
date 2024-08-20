@@ -189,6 +189,10 @@ def upload_profile_pic():
         if not os.path.exists(upload_folder):
             os.makedirs(upload_folder)
         
+        # Guardar la ruta en la base de datos
+        current_user.ruta_imagen = f'static/uploads/{filename}'
+        session.commit()
+        
         filepath = os.path.join(upload_folder, filename)
         file.save(filepath)
 

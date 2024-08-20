@@ -11,6 +11,7 @@ class User(UserMixin, Base):
     telefono = Column(String)
     contrasena = Column(String)
     fecha_nacimiento = Column(Date)
+    ruta_imagen = Column(String)
 
     def get_id(self):
         return int(self.idUser)  # Ensure the ID is in a format that Flask-Login expects (string)
