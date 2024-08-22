@@ -1,10 +1,12 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
+from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify, session
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import session
 from sqlalchemy import text
 from flask_login import login_user, login_required, logout_user, current_user
 from .models import User
 import json
+from werkzeug.utils import secure_filename
+import os
 
 
 # Crear un objeto Blueprint llamado 'auth'
@@ -166,3 +168,35 @@ def updateUser(id_user):
     except Exception as e:
         print(e)
         return jsonify({'success': False, 'error': str(e)}), 500
+
+
+@auth.route('/upload_profile_pic', methods=['POST'])
+@login_required
+def upload_profile_pic():
+    if 'profile_photo' not in request.files:
+        return jsonify({'success': False, 'error': 'No se ha seleccionado un archivo'}), 400
+
+    file = request.files['profile_photo']
+
+    if file.filename == '':
+        return jsonify({'success': False, 'error': 'No se ha seleccionado un archivo'}), 400
+
+    if file:
+        filename = secure_filename(file.filename)
+        # Especificar directamente la ruta del directorio de subida
+        upload_folder = os.path.join(os.getcwd(), 'backend/static/uploads')
+        
+        if not os.path.exists(upload_folder):
+            os.makedirs(upload_folder)
+        
+        # Guardar la ruta en la base de datos
+        current_user.ruta_imagen = f'static/uploads/{filename}'
+        session.commit()
+        
+        filepath = os.path.join(upload_folder, filename)
+        file.save(filepath)
+
+        # Generar la URL para acceder al archivo subido
+        file_url = url_for('static', filename=f'uploads/{filename}')
+
+        return jsonify({'success': True, 'filepath': file_url}), 200
