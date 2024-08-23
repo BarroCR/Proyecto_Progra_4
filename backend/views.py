@@ -3,17 +3,15 @@ from flask_login import login_user, login_required, logout_user, current_user
 import time
 import json
 import requests
-from . import session
-import datetime
-from sqlalchemy import text
+
 views = Blueprint('views', __name__)
 
 
 def fetch_earthquakes(magnitude, startDate):
         url = 'https://earthquake.usgs.gov/fdsnws/event/1/query'
-        ###print(startDate, magnitude)
+        print(startDate, magnitude)
         if startDate is None:
-            startDate = '2024-08-23'  # Valor predeterminado para startDate
+            startDate = '2024-08-18'  # Valor predeterminado para startDate
 
         if magnitude is None:
             magnitude = 3  # Valor predeterminado para magnitude
@@ -94,7 +92,7 @@ def home():
         magnitude = request.form.get('mag-select')
         startDate = request.form.get('sismo-date')
         
-    ### print(magnitude,startDate)
+    print(magnitude,startDate)
     poll(magnitude,startDate )
     return render_template("main.html")
 
@@ -107,72 +105,9 @@ def logs():
     return render_template("logs.html")
 
 
-
-import json
-from sqlalchemy.sql import text
-
-def fetch_news():
-    newsList = []
-    fetchNews = text(""" SELECT * FROM Noticia """)
-    
-    news = session.execute(fetchNews).fetchall()
-    
-    for row in news:
-        new = {
-            'idNoticia': row[0],
-            'idUser': row[1],
-            'estadoNoticia': row[2],
-            'Hora_Fecha_Noticia': row[3],
-            'Parent': row[4],
-            'Content': row[5]
-        }
-        newsList.append(new)
-    
-    # Guardar la lista en un archivo JSON
-    with open('news.json', 'w') as file:
-        json.dump(newsList, file, default=str)  # default=str para manejar datetime
-
-    # Imprimir los datos para verificar
-    for new in newsList:
-        print(new)
-    
-    
-    
-   
-
-
-
-
-
-
-
-@views.route('/news', methods=['GET', 'POST', 'PUT']) 
+@views.route('/news') 
 @login_required
 def news():
-    
-    fetch_news()
- 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     return render_template("news.html")
 
 @views.route('/about') 
