@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     updateNameInput.value = userInfoElement.getAttribute('data-username');
     updateLastNameInput.value = userInfoElement.getAttribute('data-lastname');
-    updatePasswordInput.value = userInfoElement.getAttribute('data-password');
+    // updatePasswordInput.value = userInfoElement.getAttribute('data-password');
     updateDateInput.value = userInfoElement.getAttribute('data-birthdate');
 });
 
