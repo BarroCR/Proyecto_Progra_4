@@ -1,85 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='signPageCSS.css') }}">
-    <link rel="icon" href="{{ url_for('static', filename='images/favicon.png') }}" type="image/png">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='signPageCSS.css') }}"
+    />
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='images/favicon.png') }}"
+      type="image/png"
+    />
     <title>Login Page</title>
-</head>
+  </head>
 
-<body class="body-profile">
-
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-                {% if category == 'error' %}
-                    <div  role="alert">
-                        {{ message }}
-                        
-                            
-                        </button>
-                    </div>
-                {% else %}
-                    <div  role="alert">
-                        {{ message }}
-                        
-                            
-                        </button>
-                    </div>
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
-
-
-
-
-
-
+  <body class="body-profile">
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %} {% for category, message in messages %} {% if category ==
+    'error' %}
+    <div role="alert">
+      {{ message }}
+      <!-- Mostrar mensaje de error -->
+      <button class="close-alert">
+        <!-- Botón para cerrar el mensaje -->
+      </button>
+    </div>
+    {% else %}
+    <div role="alert">
+      {{ message }}
+      <!-- Mostrar mensaje de éxito -->
+      <button class="close-alert">
+        <!-- Botón para cerrar el mensaje -->
+      </button>
+    </div>
+    {% endif %} {% endfor %} {% endif %} {% endwith %}
 
     <div class="container-profile" id="container-profile">
-        <div class="form-container-profile sign-up">
-            <form method="POST" >
-                <h1 class="Regist-header">Crear Cuenta</h1>
-                <input name="register-name" id="register-name" type="text" placeholder="Nombre" required>
-                <input name="register-lastNames" id="register-lastNames" type="text" placeholder="Apellidos" required>
-                <input name="register-email" id="register-email" type="email" placeholder="Email" required>
-                <input name="register-tel" id="register-tel" type="text" placeholder="Telefono" pattern="[0-9]{8}" required>
-                <input name="register-password" id="register-password" type="password" placeholder="Contraseña" required onkeyup="checkPasswordStrength()">
-                <span id="password-strength" class="password-strength">Nivel de seguridad de la contraseña.</span>
-                <input name="register-confirmPassword" id="register-confirmPassword" type="password" placeholder="Confirmar Contraseña" required>
-                <input name="register-dateOfBirth" id="register-dateOfBirth" type="date" placeholder="Fecha Nacimiento" required>
-                <button type="submit" name="action" value="register">Registrarse</button>
-            </form>
+      <div class="form-container-profile sign-up">
+        <form method="POST">
+          <h1 class="Regist-header">Crear Cuenta</h1>
+          <input
+            name="register-name"
+            id="register-name"
+            type="text"
+            placeholder="Nombre"
+            required
+          />
+          <input
+            name="register-lastNames"
+            id="register-lastNames"
+            type="text"
+            placeholder="Apellidos"
+            required
+          />
+          <input
+            name="register-email"
+            id="register-email"
+            type="email"
+            placeholder="Email"
+            required
+          />
+          <input
+            name="register-tel"
+            id="register-tel"
+            type="text"
+            placeholder="Telefono"
+            pattern="[0-9]{8}"
+            required
+          />
+          <input
+            name="register-password"
+            id="register-password"
+            type="password"
+            placeholder="Contraseña"
+            required
+            onkeyup="checkPasswordStrength()"
+          />
+          <span id="password-strength" class="password-strength"
+            >Nivel de seguridad de la contraseña.</span
+          >
+          <input
+            name="register-confirmPassword"
+            id="register-confirmPassword"
+            type="password"
+            placeholder="Confirmar Contraseña"
+            required
+          />
+          <input
+            name="register-dateOfBirth"
+            id="register-dateOfBirth"
+            type="date"
+            placeholder="Fecha Nacimiento"
+            required
+          />
+          <button type="submit" name="action" value="register">
+            Registrarse
+          </button>
+        </form>
+      </div>
+      <div class="form-container-profile sign-in">
+        <form method="POST">
+          <h1>Iniciar Sesion</h1>
+          <input
+            name="login-email"
+            id="login-email"
+            type="email"
+            placeholder="Email"
+            required
+          />
+          <input
+            name="login-password"
+            id="login-password"
+            type="password"
+            placeholder="Contraseña"
+            required
+          />
+          <button type="submit" name="action" value="login">
+            Iniciar Sesion
+          </button>
+        </form>
+      </div>
+      <div class="toggle-container">
+        <div class="toggle">
+          <div class="toggle-panel toggle-left">
+            <h1>Bienvenido de Nuevo!</h1>
+            <p>
+              Ingresa tus datos personales para utilizar todas las funciones del
+              sitio
+            </p>
+            <button class="hidden" id="login">Iniciar Sesion</button>
+          </div>
+          <div class="toggle-panel toggle-right">
+            <h1>Hola, Amigo!</h1>
+            <p>
+              Regístrate con tus datos personales para utilizar todas las
+              funciones del sitio
+            </p>
+            <button class="hidden" id="register">Registrarse</button>
+          </div>
         </div>
-        <div class="form-container-profile sign-in">
-            <form method="POST" >
-                <h1>Iniciar Sesion</h1>
-                <input name="login-email"  id="login-email" type="email" placeholder="Email" required>
-                <input name="login-password" id="login-password" type="password" placeholder="Contraseña" required>
-                <button type="submit" name="action" value="login">Iniciar Sesion</button>
-            </form>
-        </div>
-        <div class="toggle-container">
-            <div class="toggle">
-                <div class="toggle-panel toggle-left">
-                    <h1>Bienvenido de Nuevo!</h1>
-                    <p>Ingresa tus datos personales para utilizar todas las funciones del sitio</p>
-                    <button class="hidden" id="login">Iniciar Sesion</button>
-                </div>
-                <div class="toggle-panel toggle-right">
-                    <h1>Hola, Amigo!</h1>
-                    <p>Regístrate con tus datos personales para utilizar todas las funciones del sitio</p>
-                    <button class="hidden" id="register">Registrarse</button>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
 
     <script src="{{ url_for('static', filename='profile.js') }}"></script>
-</body>
-
+  </body>
 </html>

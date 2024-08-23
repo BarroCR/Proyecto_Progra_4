@@ -8,7 +8,6 @@ import json
 from werkzeug.utils import secure_filename
 import os
 
-
 # Crear un objeto Blueprint llamado 'auth'
 auth = Blueprint('auth', __name__)
 
