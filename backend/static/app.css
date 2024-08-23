@@ -253,7 +253,7 @@ button:hover{
     background-color: rgba(0,0,0,.3);
 }
 
-.modal{
+.modal-news{
     padding: 1.5rem;
     max-width: 32ch;
     display: grid;
@@ -268,27 +268,27 @@ button:hover{
     display: none;
 }
 
-.modal h3{
+.modal-news h3{
     grid-area: heading;
     color: var(--Dark-blue);
 }
-.modal button{
+.modal-news button{
     color: var(--White);
     padding: .75rem;
     border-radius: 8px;
     border: none;
     font-weight: 500;
 }
-.modal p{
+.modal-news p{
     grid-area: body;
     color: var(--Grayish-Blue);
     line-height: 1.5;
 }
-.modal .yes{
+.modal-news .yes{
     grid-area: yes;
     background-color: var(--Soft-Red);
 }
-.modal .no{
+.modal-news .no{
     background-color: var(--Grayish-Blue);
     grid-area: no;
 }
