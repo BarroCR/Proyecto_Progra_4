@@ -9,4 +9,4 @@ Cosas necesarias a instalar
 -flask-login
 -requests
 
-Para correr abrir la pagina es necesario instalar todas las librerias anterior y correr el archivo llamado main.py
+Para abrir la pagina es necesario instalar todas las librerias mencionadas anteriormente  y correr el archivo llamado main.py.
